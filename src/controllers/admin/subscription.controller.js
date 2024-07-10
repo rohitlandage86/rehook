@@ -1,11 +1,18 @@
 const pool = require("../../../db");
-//error handle...
+//error handler...
 error422 = (message, res) => {
     return res.status(422).json({
         status: 422,
         message: message
     });
 };
+//error 500 handler...
+error500 = (error, res)=>{
+    return res.status(500).json({
+        status:500,
+        message: "Internal servere"
+    })
+}
 
 //create subscription...
 const createSubscription = async (req, res) => {

@@ -12,8 +12,9 @@ module.exports = (req, res, next) => {
       });
     } else {
       req.companyData = {
-        email_id: decodedToken.email_id,
+        untitled_id: decodedToken.untitled_id,
         business_id: decodedToken.business_id,
+        email_id: decodedToken.email_id
       };
       next();
     }

@@ -7,9 +7,5 @@ router.post('/sign-up',businessController.businessSignUp);
 router.post('/login',businessController.businessLogin);
 router.post('/logout',checkAuth,businessController.businessLogout);
 router.get('/',businessController.getBusinessList);
-// router.get('/wma',subscriptionController.getSubscriptionWma);
-// router.get('/:id',subscriptionController.getSubscription);
-// router.put('/:id',subscriptionController.updateSubscription);
-// router.patch('/:id',subscriptionController.onStatusChange);
 
 module.exports = router;
