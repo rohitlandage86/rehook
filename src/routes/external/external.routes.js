@@ -12,6 +12,7 @@ router.get('/bbb/business/organization',externalController.bbbBusinessSearch);
 router.post('/review-submit',externalController.reviewSubmit);
 router.get('/negative-review',externalController.getNegativeReviews);
 router.get('/negative-review/:id',externalController.getNegativeReview);
+router.get('/check-platform-connected',externalController.checkPlatformConnection);
 // router.get('/twilio/business/organization',externalController.twilio)
 // router.get('/google/business/demo',externalController.demo)
 

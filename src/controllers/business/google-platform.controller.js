@@ -47,7 +47,7 @@ const createGooglePlatform = async (req, res) => {
       isBusinessIdExistQuery,
       [business_id]
     )
-    if (isBusinessIdExistResult.rowCount > 1) {
+    if (isBusinessIdExistResult.rowCount >= 1) {
       return error422('A business already has a Google platform.', res)
     }
     //check is place id is exist...
@@ -56,16 +56,16 @@ const createGooglePlatform = async (req, res) => {
     const isPlaceIdExistResult = await connection.query(isPlaceIdExistQuery, [
       place_id
     ])
-    if (isPlaceIdExistResult.rowCount > 1) {
+    if (isPlaceIdExistResult.rowCount >= 1) {
       return error422('Place id already exist.', res)
     }
     //check is email id is exist...
     const isEmailIdExistQuery =
       'SELECT * FROM google_platform WHERE TRIM(LOWER(email_id)) = $1'
     const isEmailIdExistResult = await connection.query(isEmailIdExistQuery, [
-      email_id
+      email_id.toLowerCase()
     ])
-    if (isEmailIdExistResult.rowCount > 1) {
+    if (isEmailIdExistResult.rowCount >= 1) {
       return error422('Email id already exist.', res)
     }
     //insert into google platform table...

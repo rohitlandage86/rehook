@@ -44,7 +44,7 @@ const createYelpPlatform = async (req, res) => {
       isBusinessIdExistQuery,
       [business_id]
     )
-    if (isBusinessIdExistResult.rowCount > 1) {
+    if (isBusinessIdExistResult.rowCount >= 1) {
       return error422('A business already has a yelp platform.', res)
     }
     //check is yelp id is exist...
@@ -52,7 +52,7 @@ const createYelpPlatform = async (req, res) => {
     const isYelpIdExistResult = await connection.query(isYelpIdExistQuery, [
       yelp_id
     ])
-    if (isYelpIdExistResult.rowCount > 1) {
+    if (isYelpIdExistResult.rowCount >= 1) {
       return error422('Yelp id already exist.', res)
     }
     //check is phone number is exist...
@@ -62,7 +62,7 @@ const createYelpPlatform = async (req, res) => {
       isPhoneNumberExistQuery,
       [phone_number]
     )
-    if (isPhoneNumberExistResult.rowCount > 1) {
+    if (isPhoneNumberExistResult.rowCount >= 1) {
       return error422('Phone number already exist.', res)
     }
     //insert into  yelp platform table...

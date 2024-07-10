@@ -412,6 +412,40 @@ const getNegativeReview = async (req, res) => {
       return error500(error, res)
   }
 };
+//to check platform is connected or not...
+const checkPlatformConnection = async (req, res) =>{
+  const business_id = req.query.business_id
+
+  if (!business_id) return error422("Business id is required.", res)
+    let connection
+  try {
+    connection = await pool.connect()
+    //check business id is exist or not in google platform table...
+    const checkBusinessIdQuery = "SELECT * FROM google_platform WHERE business_id = $1" 
+    const checkBusinessIdResult = await connection.query(checkBusinessIdQuery, [business_id])
+    let is_goolge_platform = checkBusinessIdResult.rowCount>=1 ? true : false ;
+    
+    //check business id is exist or not in yelp platform table...
+    const checkBusinessIdQuery2 = "SELECT * FROM yelp_platform WHERE business_id = $1"
+    const checkBusinessIdResult2 = await connection.query(checkBusinessIdQuery2, [business_id])
+    let is_yelp_platform = checkBusinessIdResult2.rowCount>=1 ? true : false;
+    let data = {
+      goolge_platform :is_goolge_platform,
+      yelp_platform:is_yelp_platform,
+      bbb_platform:false
+    }
+    return res.status(200).json({
+      status:200,
+      message:"Platform is connected successfully",
+      data:data
+    })
+    
+  } catch (error) {
+    return error500(error, res)    
+  } finally {
+    if (connection) connection.release()
+  }
+}
 module.exports = {
   yelpBusinessSearch,
   yelpBusinessSearchByPhone,
@@ -422,5 +456,6 @@ module.exports = {
   yelpBusinessSearchByBusinessId,
   reviewSubmit,
   getNegativeReviews,
-  getNegativeReview
+  getNegativeReview,
+  checkPlatformConnection
 }

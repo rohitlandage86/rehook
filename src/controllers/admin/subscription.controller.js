@@ -10,7 +10,7 @@ error422 = (message, res) => {
 error500 = (error, res)=>{
     return res.status(500).json({
         status:500,
-        message: "Internal servere"
+        message: "Internal server"
     })
 }
 
